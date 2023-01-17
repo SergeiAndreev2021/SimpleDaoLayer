@@ -1,5 +1,7 @@
 import entity.Employee;
 
-public interface EmployeeDAO extends DAOInterface<Employee>{
+import java.util.List;
 
+public interface EmployeeDAO extends DAOInterface<Employee>{
+   public List<Employee> getListByAgeAboveNumber( int number);
 }

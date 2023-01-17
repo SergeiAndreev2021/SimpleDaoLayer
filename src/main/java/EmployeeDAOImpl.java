@@ -119,4 +119,27 @@ public class EmployeeDAOImpl implements EmployeeDAO{
             }
         }
     }
+    @SneakyThrows
+    @Override
+    public List<Employee> getListByAgeAboveNumber(int number) {
+        List <Employee> list = new ArrayList<>();
+        String sql = "SELECT * FROM employees WHERE emp_age >?";
+        try(Connection connection = ConnectionSetter.setConnection()){
+            try(PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1,number);
+                ResultSet resultSet = ps.executeQuery();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt(1);
+                    String name = resultSet.getString(2);
+                    String lastname = resultSet.getString(3);
+                    int age = resultSet.getInt(4);
+                    String dep = resultSet.getString(5);
+                    Employee employee = new Employee(name, lastname, age, dep);
+                    employee.setId(id);
+                    list.add(employee);
+                }
+            }
+        }
+        return list;
+    }
 }
